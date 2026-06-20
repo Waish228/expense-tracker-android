@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- MAIN CONTENT AREA (above bottom nav) -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="56dp">
+
+        <!-- ═══════ PAGE: DASHBOARD ═══════ -->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/page_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="24dp">
+
+                    <!-- TOP BAR -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/app_name"
+                                android:textSize="22sp"
+                                android:textColor="@color/text_primary"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/greeting_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dashboard"
+                                android:textColor="@color/text_muted"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/btn_settings"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@android:drawable/ic_menu_preferences"
+                            android:padding="4dp"
+                            android:contentDescription="@string/settings"
+                            app:tint="@color/text_primary" />
+                    </LinearLayout>
+
+                    <!-- SUMMARY CARDS -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:layout_marginBottom="12dp">
+
+                        <!-- Row 1 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:baselineAligned="false"
+                            android:layout_marginBottom="6dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/card_bg"
+                                android:padding="14dp"
+                                android:layout_marginEnd="6dp">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_money_with_wings" android:textSize="18sp" />
+                                <TextView android:id="@+id/today_spent" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/zero_amount" android:textColor="@color/red" android:textSize="18sp" android:textStyle="bold" android:fontFamily="monospace" android:layout_marginTop="6dp" />
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/spent_today" android:textColor="@color/text_muted" android:textSize="11sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/card_bg"
+                                android:padding="14dp"
+                                android:layout_marginStart="6dp">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_money_bag" android:textSize="18sp" />
+                                <TextView android:id="@+id/today_income" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/zero_amount" android:textColor="@color/green" android:textSize="18sp" android:textStyle="bold" android:fontFamily="monospace" android:layout_marginTop="6dp" />
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/received_today" android:textColor="@color/text_muted" android:textSize="11sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Row 2 -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:baselineAligned="false"
+                            android:layout_marginBottom="6dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/card_bg"
+                                android:padding="14dp"
+                                android:layout_marginEnd="6dp">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_calendar" android:textSize="18sp" />
+                                <TextView android:id="@+id/month_spent" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/zero_amount" android:textColor="@color/purple" android:textSize="18sp" android:textStyle="bold" android:fontFamily="monospace" android:layout_marginTop="6dp" />
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/this_month" android:textColor="@color/text_muted" android:textSize="11sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:background="@drawable/card_bg"
+                                android:padding="14dp"
+                                android:layout_marginStart="6dp">
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_income_month" android:textSize="18sp" />
+                                <TextView android:id="@+id/month_income" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/zero_amount" android:textColor="@color/cyan" android:textSize="18sp" android:textStyle="bold" android:fontFamily="monospace" android:layout_marginTop="6dp" />
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/month_income_label" android:textColor="@color/text_muted" android:textSize="11sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Budget Row -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:background="@drawable/card_bg"
+                            android:padding="14dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/emoji_target" android:textSize="18sp" />
+                            <TextView android:id="@+id/budget_left" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/zero_amount" android:textColor="@color/blue" android:textSize="18sp" android:textStyle="bold" android:fontFamily="monospace" android:layout_marginTop="6dp" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/budget_left_label" android:textColor="@color/text_muted" android:textSize="11sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- CHARTS -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/card_bg"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:padding="16dp"
+                        android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/spending_trend_label" android:textColor="@color/text_primary" android:textSize="14sp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_trend"
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/card_bg"
+                        android:layout_marginHorizontal="12dp"
+                        android:layout_marginBottom="16dp"
+                        android:padding="16dp"
+                        android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/by_category_label" android:textColor="@color/text_primary" android:textSize="14sp" android:textStyle="bold" android:layout_marginBottom="16dp" />
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/chart_category"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp" />
+                    </LinearLayout>
+
+                    <!-- RECENT TXS (top 5) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="16dp"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+                        <TextView android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:text="@string/recent_transactions_label" android:textColor="@color/text_primary" android:textSize="16sp" android:textStyle="bold" />
+                        <TextView android:id="@+id/btn_view_all" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="View All →" android:textColor="@color/blue" android:textSize="13sp" android:padding="4dp" />
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recent_tx_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:clipToPadding="false" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <!-- ═══════ PAGE: TRANSACTIONS ═══════ -->
+        <LinearLayout
+            android:id="@+id/page_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
+                <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/transactions" android:textSize="22sp" android:textColor="@color/text_primary" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="All your income and expenses" android:textColor="@color/text_muted" android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Search -->
+            <EditText
+                android:id="@+id/search_input"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/input_bg"
+                android:paddingHorizontal="14dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_dim"
+                android:hint="@string/search_hint"
+                android:textSize="13sp"
+                android:inputType="text"
+                android:importantForAutofill="no"
+                android:maxLines="1" />
+
+            <!-- Filters -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:paddingHorizontal="16dp"
+                android:layout_marginBottom="8dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    style="?android:attr/buttonBarStyle">
+                    <Button android:id="@+id/filter_all" android:layout_width="wrap_content" android:layout_height="36dp" android:text="@string/filter_all" android:textSize="12sp" android:textAllCaps="false" android:backgroundTint="@color/blue" android:textColor="@color/white" android:layout_marginEnd="8dp" style="?android:attr/buttonBarButtonStyle"/>
+                    <Button android:id="@+id/filter_debit" android:layout_width="wrap_content" android:layout_height="36dp" android:text="@string/filter_debits" android:textSize="12sp" android:textAllCaps="false" android:backgroundTint="@color/card_dark" android:textColor="@color/text_muted" android:layout_marginEnd="8dp" style="?android:attr/buttonBarButtonStyle"/>
+                    <Button android:id="@+id/filter_credit" android:layout_width="wrap_content" android:layout_height="36dp" android:text="@string/filter_credits" android:textSize="12sp" android:textAllCaps="false" android:backgroundTint="@color/card_dark" android:textColor="@color/text_muted" android:layout_marginEnd="8dp" style="?android:attr/buttonBarButtonStyle"/>
+                    <Button android:id="@+id/filter_sms" android:layout_width="wrap_content" android:layout_height="36dp" android:text="@string/filter_sms" android:textSize="12sp" android:textAllCaps="false" android:backgroundTint="@color/card_dark" android:textColor="@color/text_muted" android:layout_marginEnd="8dp" style="?android:attr/buttonBarButtonStyle"/>
+                    <Button android:id="@+id/filter_notif" android:layout_width="wrap_content" android:layout_height="36dp" android:text="@string/filter_notification" android:textSize="12sp" android:textAllCaps="false" android:backgroundTint="@color/card_dark" android:textColor="@color/text_muted" style="?android:attr/buttonBarButtonStyle"/>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- Full transaction list -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tx_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="76dp"
+        android:src="@android:drawable/ic_input_add"
+        android:contentDescription="@string/add_transaction"
+        app:backgroundTint="@color/blue"
+        app:tint="@color/white" />
+
+    <!-- BOTTOM NAVIGATION -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:background="@color/card_dark"
+        app:itemIconTint="@color/text_muted"
+        app:itemTextColor="@color/text_muted"
+        app:itemActiveIndicatorStyle="@null"
+        app:menu="@menu/bottom_nav_menu" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="32dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="28sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tagline"
+            android:textColor="@color/text_muted"
+            android:textSize="14sp"
+            android:layout_marginBottom="32dp" />
+
+        <!-- EMAIL VERIFICATION SECTION (hidden by default) -->
+        <LinearLayout
+            android:id="@+id/verification_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@drawable/card_bg"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✉️"
+                android:textSize="32sp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/email_verification_required"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textAlignment="center"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/verification_email_display"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:layout_marginBottom="16dp" />
+
+            <Button
+                android:id="@+id/resend_btn"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:text="@string/resend_verification"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/blue"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/verification_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textAlignment="center"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:id="@+id/back_to_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="← Back to Log In"
+                android:textColor="@color/blue"
+                android:textSize="13sp"
+                android:padding="8dp" />
+        </LinearLayout>
+
+        <!-- NAME (signup only) -->
+        <LinearLayout
+            android:id="@+id/name_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/full_name_label"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp"
+                android:letterSpacing="0.08"
+                android:layout_marginBottom="6dp" />
+
+            <EditText
+                android:id="@+id/name_input"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/input_bg"
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_dim"
+                android:hint="@string/name_hint"
+                android:textSize="15sp"
+                android:inputType="textPersonName"
+                android:autofillHints="name"
+                android:layout_marginBottom="12dp" />
+        </LinearLayout>
+
+        <!-- EMAIL -->
+        <TextView
+            android:id="@+id/email_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email_label"
+            android:textColor="@color/text_muted"
+            android:textSize="11sp"
+            android:letterSpacing="0.08"
+            android:layout_marginBottom="6dp" />
+
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/input_bg"
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_dim"
+            android:hint="@string/email_hint"
+            android:textSize="15sp"
+            android:inputType="textEmailAddress"
+            android:autofillHints="emailAddress"
+            android:layout_marginBottom="12dp" />
+
+        <!-- PASSWORD -->
+        <TextView
+            android:id="@+id/password_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/password_label"
+            android:textColor="@color/text_muted"
+            android:textSize="11sp"
+            android:letterSpacing="0.08"
+            android:layout_marginBottom="6dp" />
+
+        <EditText
+            android:id="@+id/password_input"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/input_bg"
+            android:paddingHorizontal="16dp"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_dim"
+            android:hint="@string/password_hint"
+            android:textSize="15sp"
+            android:inputType="textPassword"
+            android:autofillHints="password"
+            android:layout_marginBottom="8dp" />
+
+        <!-- CONFIRM PASSWORD (signup only) -->
+        <LinearLayout
+            android:id="@+id/confirm_password_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/confirm_password_label"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp"
+                android:letterSpacing="0.08"
+                android:layout_marginBottom="6dp" />
+
+            <EditText
+                android:id="@+id/confirm_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/input_bg"
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_dim"
+                android:hint="@string/confirm_password_hint"
+                android:textSize="15sp"
+                android:inputType="textPassword"
+                android:autofillHints="password"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+
+        <!-- FORGOT PASSWORD -->
+        <TextView
+            android:id="@+id/forgot_password_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/forgot_password"
+            android:textColor="@color/blue"
+            android:textSize="12sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- ERROR TEXT -->
+        <TextView
+            android:id="@+id/error_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:textSize="13sp"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp" />
+
+        <!-- AUTH BUTTON -->
+        <Button
+            android:id="@+id/auth_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:layout_marginTop="8dp" />
+
+        <!-- TOGGLE LOGIN/SIGNUP -->
+        <TextView
+            android:id="@+id/toggle_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toggle_signup"
+            android:textColor="@color/blue"
+            android:textSize="13sp"
+            android:padding="12dp"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+</ScrollView>

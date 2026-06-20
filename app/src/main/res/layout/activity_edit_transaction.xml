@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Transaction"
+            android:textSize="22sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <!-- TYPE -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/type_label" android:textColor="@color/text_muted" android:textSize="11sp" android:letterSpacing="0.08" android:layout_marginBottom="8dp" />
+
+        <RadioGroup
+            android:id="@+id/type_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/type_expense"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:text="@string/expense_with_emoji"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:background="@drawable/radio_expense_bg"
+                android:gravity="center"
+                android:button="@null"
+                android:checked="true" />
+
+            <RadioButton
+                android:id="@+id/type_income"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:text="@string/income_with_emoji"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:background="@drawable/radio_income_bg"
+                android:gravity="center"
+                android:button="@null"
+                android:layout_marginStart="8dp" />
+        </RadioGroup>
+
+        <!-- AMOUNT -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/amount_label" android:textColor="@color/text_muted" android:textSize="11sp" android:letterSpacing="0.08" android:layout_marginBottom="6dp" />
+        <EditText android:id="@+id/amount_input" android:layout_width="match_parent" android:layout_height="56dp" android:background="@drawable/input_bg" android:paddingHorizontal="16dp" android:textColor="@color/text_primary" android:textColorHint="@color/text_dim" android:hint="@string/amount_hint" android:importantForAutofill="no" android:textSize="24sp" android:textStyle="bold" android:fontFamily="monospace" android:inputType="numberDecimal" android:layout_marginBottom="16dp" />
+
+        <!-- CATEGORY -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/category_label" android:textColor="@color/text_muted" android:textSize="11sp" android:letterSpacing="0.08" android:layout_marginBottom="6dp" />
+        <Spinner android:id="@+id/category_spinner" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/input_bg" android:paddingHorizontal="16dp" android:layout_marginBottom="16dp" />
+
+        <!-- DESCRIPTION -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/description_label" android:textColor="@color/text_muted" android:textSize="11sp" android:letterSpacing="0.08" android:layout_marginBottom="6dp" />
+        <EditText android:id="@+id/desc_input" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/input_bg" android:paddingHorizontal="16dp" android:textColor="@color/text_primary" android:textColorHint="@color/text_dim" android:hint="@string/description_hint" android:importantForAutofill="no" android:textSize="15sp" android:inputType="text" android:layout_marginBottom="16dp" />
+
+        <!-- DATE -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/date_label" android:textColor="@color/text_muted" android:textSize="11sp" android:letterSpacing="0.08" android:layout_marginBottom="6dp" />
+        <EditText android:id="@+id/date_input" android:layout_width="match_parent" android:layout_height="48dp" android:background="@drawable/input_bg" android:paddingHorizontal="16dp" android:textColor="@color/text_primary" android:textColorHint="@color/text_dim" android:hint="@string/select_date" android:importantForAutofill="no" android:textSize="15sp" android:inputType="none" android:focusable="false" android:clickable="true" android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/save_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Save Changes"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/blue"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/cancel"
+            android:textColor="@color/text_muted"
+            android:backgroundTint="@color/card_dark"
+            android:textAllCaps="false"
+            android:textSize="15sp" />
+    </LinearLayout>
+</ScrollView>
