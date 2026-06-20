@@ -50,14 +50,9 @@ public class SupabaseHelper {
         void onError(String message);
     }
 
-    /**
-     * Refreshes the access token if it's expired or about to expire.
-     * Call this before making authenticated requests.
-     */
     public void refreshSession(RefreshCallback callback) {
         String refreshToken = prefs.getString("refresh_token", null);
         if (refreshToken == null || refreshToken.isEmpty()) {
-            // No refresh token, session might be old - user needs to re-login
             if (callback != null) callback.onError("No refresh token available");
             return;
         }
@@ -88,7 +83,6 @@ public class SupabaseHelper {
                         String newRefreshToken = safeGetString(json, "refresh_token", null);
 
                         if (newToken != null && !newToken.isEmpty()) {
-                            // Save new tokens
                             SharedPreferences.Editor editor = prefs.edit();
                             editor.putString("access_token", newToken);
                             if (newRefreshToken != null && !newRefreshToken.isEmpty()) {
@@ -101,7 +95,6 @@ public class SupabaseHelper {
                             if (callback != null) callback.onError("Invalid token response");
                         }
                     } else {
-                        // Refresh token expired - user needs to re-login
                         signOut();
                         if (callback != null) callback.onError("Session expired, please login again");
                     }
@@ -190,10 +183,8 @@ public class SupabaseHelper {
                     if (response.isSuccessful()) {
                         JsonObject json = JsonParser.parseString(responseBody).getAsJsonObject();
                         String token = safeGetString(json, "access_token", null);
-                        
-                        // Check if email confirmation is required
+
                         if (token == null || token.isEmpty()) {
-                            // Supabase returns user object but no token when email confirmation is on
                             callback.onConfirmationRequired(email);
                         } else {
                             JsonObject user = json.getAsJsonObject("user");
@@ -331,7 +322,6 @@ public class SupabaseHelper {
                 .apply();
     }
 
-    // Overload for backward compatibility
     private void saveSession(String userId, String accessToken) {
         saveSession(userId, accessToken, null);
     }
@@ -385,7 +375,6 @@ public class SupabaseHelper {
         });
     }
 
-    // Backward compatibility overload (no date)
     public void insertTransaction(String type, double amount, String category,
                                   String description, String source, String smsRaw,
                                   SimpleCallback callback) {
@@ -556,18 +545,31 @@ public class SupabaseHelper {
         });
     }
 
+    /**
+     * Creates or updates the current user's profile row.
+     *
+     * NOTE: This uses an UPSERT (POST + Prefer: resolution=merge-duplicates)
+     * instead of a plain PATCH. A PATCH to a row that doesn't exist yet
+     * returns a *successful* empty response from PostgREST -- it looks like
+     * the save worked, but nothing was actually written. This previously
+     * caused profile data (name, budget) to silently fail to persist for
+     * any account whose `profiles` row was missing (e.g. created before
+     * the on_auth_user_created trigger existed), making it seem like data
+     * "disappeared" until logout/login.
+     */
     public void updateProfile(String fullName, double monthlyBudget, SimpleCallback callback) {
         JsonObject body = new JsonObject();
+        body.addProperty("id", getUserId());
         body.addProperty("full_name", fullName);
         body.addProperty("monthly_budget", monthlyBudget);
 
         Request request = new Request.Builder()
-                .url(URL + "/rest/v1/profiles?id=eq." + getUserId())
+                .url(URL + "/rest/v1/profiles")
                 .addHeader("apikey", ANON_KEY)
                 .addHeader("Authorization", "Bearer " + getAccessToken())
                 .addHeader("Content-Type", "application/json")
-                .addHeader("Prefer", "return=minimal")
-                .patch(RequestBody.create(body.toString(), JSON_TYPE))
+                .addHeader("Prefer", "resolution=merge-duplicates,return=minimal")
+                .post(RequestBody.create(body.toString(), JSON_TYPE))
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
