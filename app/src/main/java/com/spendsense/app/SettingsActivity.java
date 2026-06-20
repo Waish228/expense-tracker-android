@@ -2,7 +2,6 @@ package com.spendsense.app;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
@@ -18,7 +17,6 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText budgetInput, nameInput;
     private Button saveBtn, logoutBtn, notifAccessBtn;
     private TextView notifStatus, userNameDisplay, userEmail, userInitial;
-    private String currentUserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +47,29 @@ public class SettingsActivity extends AppCompatActivity {
             notifAccessRow.setOnClickListener(v -> openNotificationSettings());
         }
 
-        // Test SMS Parser
+        // ── DEBUG TOOLS ──
+        // These rows (Test SMS Parser, Clear Dedup Cache) are developer
+        // utilities and must not be visible to end users in a release
+        // build. Hide the entire "Debug Tools" section in production.
         View testSmsRow = findViewById(R.id.test_sms_row);
-        if (testSmsRow != null) {
-            testSmsRow.setOnClickListener(v -> testSmsParser());
-        }
-
-        // Clear Dedup Cache
         View clearDedupRow = findViewById(R.id.clear_dedup_row);
-        if (clearDedupRow != null) {
-            clearDedupRow.setOnClickListener(v -> clearDedupCache());
+        View debugSectionLabel = findViewById(R.id.debug_tools_label); // optional id, see layout note below
+        View debugSectionCard = findViewById(R.id.debug_tools_card);   // optional id, see layout note below
+
+        if (BuildConfig.DEBUG) {
+            if (testSmsRow != null) {
+                testSmsRow.setOnClickListener(v -> testSmsParser());
+            }
+            if (clearDedupRow != null) {
+                clearDedupRow.setOnClickListener(v -> clearDedupCache());
+            }
+        } else {
+            // Production build: hide debug-only UI entirely rather than
+            // just disabling the click listeners, so users never see them.
+            if (testSmsRow != null) testSmsRow.setVisibility(View.GONE);
+            if (clearDedupRow != null) clearDedupRow.setVisibility(View.GONE);
+            if (debugSectionLabel != null) debugSectionLabel.setVisibility(View.GONE);
+            if (debugSectionCard != null) debugSectionCard.setVisibility(View.GONE);
         }
 
         logoutBtn.setOnClickListener(v -> showLogoutConfirmation());
@@ -162,10 +173,12 @@ public class SettingsActivity extends AppCompatActivity {
     private void clearDedupCache() {
         new android.app.AlertDialog.Builder(this)
             .setTitle("Clear Dedup Cache")
-            .setMessage("This will remove all duplicate prevention data. SMS transactions from the last 10 minutes may be counted twice. Are you sure?")
+            .setMessage("This will remove all duplicate prevention data. SMS transactions from the last few minutes may be counted twice. Are you sure?")
             .setPositiveButton("Clear", (d, w) -> {
-                SharedPreferences prefs = getSharedPreferences("trackmyspend_dedup", MODE_PRIVATE);
-                prefs.edit().clear().apply();
+                // Use the dedicated helper so BOTH the fingerprint cache
+                // and the newer "recent transactions" tolerant-match cache
+                // are cleared together.
+                new TransactionDeduplicator(this).clearAll();
                 Toast.makeText(this, R.string.cleared_dedup, Toast.LENGTH_SHORT).show();
             })
             .setNegativeButton("Cancel", null)
@@ -189,9 +202,14 @@ public class SettingsActivity extends AppCompatActivity {
                         userInitial.setText(fullName.substring(0, 1).toUpperCase());
                     }
 
-                    // Get email from shared prefs
-                    String email = supabase.getAccessToken(); // We don't store email directly, use placeholder
-                    userEmail.setText(currentUserEmail != null ? currentUserEmail : getString(R.string.user_email_placeholder));
+                    // Email is now stored at login/signup time in SupabaseHelper
+                    // (see SupabaseHelper.getEmail()). Previously this read
+                    // getAccessToken() by mistake and the real email was never
+                    // saved anywhere, so this always showed a placeholder.
+                    String email = supabase.getEmail();
+                    userEmail.setText((email != null && !email.isEmpty())
+                            ? email
+                            : getString(R.string.user_email_placeholder));
                 });
             }
 

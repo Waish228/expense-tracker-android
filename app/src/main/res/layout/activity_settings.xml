@@ -442,6 +442,7 @@
 
             <!-- DEBUG TOOLS -->
             <TextView
+                android:id="@+id/debug_tools_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/debug_tools"
@@ -453,6 +454,7 @@
                 android:layout_marginStart="4dp" />
 
             <LinearLayout
+                android:id="@+id/debug_tools_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/card_bg"

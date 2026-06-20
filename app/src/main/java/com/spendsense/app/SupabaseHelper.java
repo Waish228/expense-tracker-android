@@ -38,6 +38,10 @@ public class SupabaseHelper {
         return prefs.getString("user_id", null);
     }
 
+    public String getEmail() {
+        return prefs.getString("user_email", null);
+    }
+
     public boolean isLoggedIn() {
         String token = getAccessToken();
         String userId = getUserId();
@@ -189,7 +193,7 @@ public class SupabaseHelper {
                         } else {
                             JsonObject user = json.getAsJsonObject("user");
                             String uid = safeGetString(user, "id", "");
-                            saveSession(uid, token);
+                            saveSession(uid, token, null, email);
                             callback.onSuccess(uid, token);
                         }
                     } else {
@@ -233,7 +237,7 @@ public class SupabaseHelper {
                         String refreshToken = safeGetString(json, "refresh_token", "");
                         JsonObject user = json.getAsJsonObject("user");
                         String uid = user != null ? safeGetString(user, "id", "") : "";
-                        saveSession(uid, token, refreshToken);
+                        saveSession(uid, token, refreshToken, email);
                         callback.onSuccess(uid, token);
                     } else {
                         String msg = parseErrorMessage(responseBody, "Login failed");
@@ -314,16 +318,21 @@ public class SupabaseHelper {
         prefs.edit().clear().apply();
     }
 
-    private void saveSession(String userId, String accessToken, String refreshToken) {
+    private void saveSession(String userId, String accessToken, String refreshToken, String email) {
         prefs.edit()
                 .putString("user_id", userId)
                 .putString("access_token", accessToken)
                 .putString("refresh_token", refreshToken != null ? refreshToken : "")
+                .putString("user_email", email != null ? email : "")
                 .apply();
     }
 
+    private void saveSession(String userId, String accessToken, String refreshToken) {
+        saveSession(userId, accessToken, refreshToken, null);
+    }
+
     private void saveSession(String userId, String accessToken) {
-        saveSession(userId, accessToken, null);
+        saveSession(userId, accessToken, null, null);
     }
 
     // ── TRANSACTIONS: Insert ──
